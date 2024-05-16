@@ -14,7 +14,20 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
--- next greatest remap ever : asbjornHaland
+--[[
+Practical Differences
+Scope of Yank:
+
+<leader>y in normal mode copies the text of the current line.
+<leader>y in visual mode copies the selected text.
+<leader>Y in normal mode always copies the entire line regardless of cursor position.
+Modes of Operation:
+
+<leader>y works in both normal and visual modes, making it versatile for copying both single lines and selections.
+<leader>Y is specific to normal mode, primarily used for quickly copying entire lines.
+
+To yank whole page, ggVG then leader y
+--]]
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 

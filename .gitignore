@@ -1,4 +1,5 @@
 lazy/
+!lua/eroy/lazy/
 *.swp
 *.bak
 *.tmp
