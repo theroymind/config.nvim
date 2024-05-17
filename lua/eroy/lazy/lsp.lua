@@ -28,14 +28,40 @@ return {
             ensure_installed = {
                 "lua_ls",
                 "rust_analyzer",
+                "tsserver",
+                "vuels",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
+                        capabilities = capabilities,
+                        underline = true,
+                        virtual_text = {
+                            severity_limit = "Warning"
+                        }
                     }
                 end,
+                ["vuels"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.vuels.setup {
+                        cmd = { "vls" },
+                        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+                        settings = {
+                            vetur = {
+                                useWorkspaceDependencies = true,
+                                validation = {
+                                    template = true,
+                                    style = true,
+                                    script = true,
+                                },
 
+                                experimental = {
+                                    templateInterpolationService = true,
+                                },
+                            },
+                        },
+                    }
+                end,
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
