@@ -13,6 +13,6 @@ return {
             ColorMyPencils()
         end
     },
-
+    { "diegoulloao/neofusion.nvim", name = "neofusion", priority = 1000 , config = true }
 
 }
