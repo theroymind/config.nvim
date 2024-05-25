@@ -30,6 +30,7 @@ return {
                 "rust_analyzer",
                 "tsserver",
                 "vuels",
+                "intelephense"
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -60,6 +61,12 @@ return {
                                 },
                             },
                         },
+                    }
+                end,
+                ["intelephense"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.intelephense.setup {
+                        -- Config if required
                     }
                 end,
                 ["lua_ls"] = function()
