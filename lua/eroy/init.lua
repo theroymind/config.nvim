@@ -4,7 +4,7 @@ require("eroy.lazy_init")
 
 
 local augroup = vim.api.nvim_create_augroup
-local EricGroup = augroup('Eric', {})
+local GeneralGroup = augroup('General', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
@@ -18,6 +18,13 @@ vim.filetype.add({
         templ = 'templ',
     }
 })
+vim.opt.clipboard = 'unnamedplus'
+
+local function open_nvim_tree()
+    -- open the tree
+    require("nvim-tree.api").tree.open()
+end
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 autocmd('TextYankPost', {
     group = yank_group,
@@ -30,14 +37,14 @@ autocmd('TextYankPost', {
     end,
 })
 
-autocmd({"BufWritePre"}, {
-    group = EricGroup,
+autocmd({ "BufWritePre" }, {
+    group = GeneralGroup,
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })
 
 autocmd('LspAttach', {
-    group = EricGroup,
+    group = GeneralGroup,
     callback = function(e)
         local opts = { buffer = e.buf }
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
@@ -52,4 +59,3 @@ autocmd('LspAttach', {
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
     end
 })
-
