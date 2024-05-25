@@ -22,7 +22,8 @@ The default color scheme is Nord, you can see/add color schemes in
 `lua/eroy/lazy/colors.lua`
 
 You can change the color scheme calling:
-:lua ColorMyPencils("neofusion")
+
+`:lua ColorMyPencils("neofusion")`
 
 
 ## Icons In nvim-tree
