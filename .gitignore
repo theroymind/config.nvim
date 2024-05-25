@@ -4,3 +4,4 @@ lazy/
 *.bak
 *.tmp
 *.un~
+.idea

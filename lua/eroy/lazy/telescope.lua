@@ -6,7 +6,19 @@ return {
     },
 
     config = function()
-        require('telescope').setup({})
+        require('telescope').setup({ defaults = {
+          layout_config = {
+            vertical = {
+              width = 0.95
+            },
+            horizontal = {
+              width = 0.95
+            },
+          },
+          path_display = {
+            "filename_first"
+          },
+        }})
 
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>pf', builtin.find_files, {})

@@ -48,7 +48,7 @@ return {
                         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
                         settings = {
                             vetur = {
-                                useWorkspaceDependencies = true,
+                                useWorkspaceDependencies = false,
                                 validation = {
                                     template = true,
                                     style = true,
