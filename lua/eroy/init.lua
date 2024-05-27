@@ -22,14 +22,9 @@ vim.opt.clipboard = 'unnamedplus'
 
 -- automatically read latest files from disk when entering buffer
 vim.opt.autoread = true
-vim.api.nvim_create_autocmd({"FocusGained", "BufEnter"}, {
-  command = "checktime",
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+    command = "checktime",
 })
-local function open_nvim_tree()
-    -- open the tree
-    require("nvim-tree.api").tree.open()
-end
-vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 autocmd('TextYankPost', {
     group = yank_group,
@@ -46,6 +41,15 @@ autocmd({ "BufWritePre" }, {
     group = GeneralGroup,
     pattern = "*",
     command = [[%s/\s\+$//e]],
+})
+
+autocmd("User", {
+    pattern = "LazyVimStarted",
+    callback = function()
+        -- Callbacks to do once all lazy vim setup is done and plugins are loaded
+        ColorMyPencils()
+        require("nvim-tree.api").tree.open()
+    end
 })
 
 autocmd('LspAttach', {

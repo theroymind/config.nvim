@@ -15,11 +15,11 @@ return {
     config = function()
         require("chatgpt").setup({
             openai_params = {
-                model = "gpt-4o"
+                model = "gpt-4o",
+                max_tokens = 4096
             },
             edit_with_instructions = {
                 keymaps = {
-                    close = "<Esc>", -- Remap the close key to Escape
                     accept = "<C-y>",
                     toggle_diff = "<C-d>",
                     toggle_settings = "<C-o>",
@@ -30,7 +30,6 @@ return {
             },
             chat = {
                 keymaps = {
-                    close = "<Esc>", -- Remap the close key to Escape
                     yank_last = "<C-y>",
                     yank_last_code = "<C-k>",
                     scroll_up = "<C-u>",
