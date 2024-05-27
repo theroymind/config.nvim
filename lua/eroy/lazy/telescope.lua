@@ -4,7 +4,7 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim"
     },
-
+    name = "telescope",
     config = function()
         require('telescope').setup({ defaults = {
           layout_config = {

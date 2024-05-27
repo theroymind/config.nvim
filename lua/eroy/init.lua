@@ -20,6 +20,11 @@ vim.filetype.add({
 })
 vim.opt.clipboard = 'unnamedplus'
 
+-- automatically read latest files from disk when entering buffer
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({"FocusGained", "BufEnter"}, {
+  command = "checktime",
+})
 local function open_nvim_tree()
     -- open the tree
     require("nvim-tree.api").tree.open()

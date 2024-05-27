@@ -115,6 +115,23 @@ return {
             })
         })
 
+        -- Setup completion for command-line mode
+        cmp.setup.cmdline(':', {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = cmp.config.sources({
+                { name = 'path' }
+            }, {
+                { name = 'cmdline' }
+            })
+        })
+
+        -- Setup completion for search mode (e.g., "/")
+        cmp.setup.cmdline('/', {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = {
+                { name = 'buffer' }
+            }
+        })
         vim.diagnostic.config({
             -- update_in_insert = true,
             float = {
