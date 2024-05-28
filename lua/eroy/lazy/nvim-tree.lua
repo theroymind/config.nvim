@@ -20,6 +20,9 @@ return {
             },
             renderer = {
                 highlight_opened_files = "all",
+            },
+            update_focused_file = {
+                enable = true
             }
         }
     end
