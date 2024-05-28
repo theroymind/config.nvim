@@ -11,7 +11,6 @@ return {
             open_on_tab = false,
             hijack_cursor = false,
             update_cwd = true,
-            open_on_setup = true,
             diagnostics = {
                 enable = true,
             },
