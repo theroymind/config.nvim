@@ -54,41 +54,13 @@ return {
                 }
             },
         })
-        local prev_buf, prev_win
 
-        _G.OpenChatGPTWithSettings = function()
-            prev_buf = vim.api.nvim_get_current_buf()
-            prev_win = vim.api.nvim_get_current_win()
-            vim.cmd("ChatGPT")
-        end
-
-        vim.api.nvim_set_keymap('n', '<leader>cc', ':lua OpenChatGPTWithSettings()<CR>', { noremap = true, silent = true })
-
-        local autocmd = vim.api.nvim_create_autocmd
-        local augroup = vim.api.nvim_create_augroup
-
-        local Eroy_ChatGPT = augroup("eroy_chatgpt", {})
-
-        autocmd("BufWinLeave", {
-            group = Eroy_ChatGPT,
-            pattern = "*",
-            callback = function()
-                if vim.bo.filetype == "chatgpt-input" then
-                    if prev_win and vim.api.nvim_win_is_valid(prev_win) then
-                        vim.api.nvim_set_current_win(prev_win)
-                    end
-                    if prev_buf and vim.api.nvim_buf_is_valid(prev_buf) then
-                        vim.api.nvim_set_current_buf(prev_buf)
-                    end
-                end
-            end,
-        })
         -- Define key mappings
         local keymap = vim.api.nvim_set_keymap
         local opts = { noremap = true, silent = true }
 
         -- Normal mode mappings
-        -- keymap('n', '<leader>cc', '<cmd>ChatGPT<CR>', opts)
+        keymap('n', '<leader>cc', '<cmd>ChatGPT<CR>', opts)
         keymap('n', '<leader>ce', '<cmd>ChatGPTEditWithInstruction<CR>', opts)
         keymap('n', '<leader>cg', '<cmd>ChatGPTRun grammar_correction<CR>', opts)
         keymap('n', '<leader>ct', '<cmd>ChatGPTRun translate<CR>', opts)
