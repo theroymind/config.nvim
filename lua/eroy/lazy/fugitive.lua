@@ -7,8 +7,12 @@ return {
 
         -- Function to open Fugitive status and track previous buffer
         function OpenFugitive()
-            _G.previous_bufnr = vim.api.nvim_get_current_buf()
-            vim.cmd("mkview 1")
+            local current_buf = vim.api.nvim_get_current_buf()
+            local bufname = vim.api.nvim_buf_get_name(current_buf)
+            if bufname and bufname ~= "" and vim.bo.filetype ~= "NvimTree" then
+                vim.cmd("mkview 1")
+                _G.previous_bufnr = current_buf
+            end
             vim.cmd.Git()
             _G.fugitive_status_winid = vim.api.nvim_get_current_win()
         end
@@ -25,8 +29,13 @@ return {
         function CloseFugitiveAndReturn()
             vim.cmd("q")
             if _G.previous_bufnr and vim.api.nvim_buf_is_valid(_G.previous_bufnr) then
-                vim.cmd("buffer " .. _G.previous_bufnr)
-                vim.cmd("loadview 1")
+                local bufname = vim.api.nvim_buf_get_name(_G.previous_bufnr)
+                if bufname and bufname ~= "" and vim.bo.filetype ~= "NvimTree" then
+                    vim.cmd("buffer " .. _G.previous_bufnr)
+                    vim.cmd("loadview 1")
+                else
+                    vim.cmd("buffer " .. _G.previous_bufnr)
+                end
             end
         end
 
@@ -68,6 +77,7 @@ return {
                 end
             end,
         })
+
         -- Autocommand to handle settings when entering a Fugitive buffer
         vim.api.nvim_create_autocmd("BufWinEnter", {
             group = Eroy_Fugitive,
