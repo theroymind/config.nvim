@@ -12,9 +12,11 @@ return {
         local file_pattern_string = table.concat(file_patterns, ",")
 
         -- Set up autocommand to run PrettierAsync on InsertLeave and TextChanged for specific file types
+       --[[
         vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
             pattern = file_pattern_string,
             command = "PrettierAsync"
         })
+        ]]--
     end
 }

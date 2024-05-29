@@ -43,15 +43,6 @@ autocmd({ "BufWritePre" }, {
     command = [[%s/\s\+$//e]],
 })
 
-autocmd("User", {
-    pattern = "LazyVimStarted",
-    callback = function()
-        -- Callbacks to do once all lazy vim setup is done and plugins are loaded
-        ColorMyPencils()
-        require("nvim-tree.api").tree.open()
-        vim.cmd("wincmd p")
-    end
-})
 
 autocmd('LspAttach', {
     group = GeneralGroup,

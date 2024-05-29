@@ -9,10 +9,10 @@ return {
         function OpenFugitive()
             local current_buf = vim.api.nvim_get_current_buf()
             local bufname = vim.api.nvim_buf_get_name(current_buf)
-            if bufname and bufname ~= "" and vim.bo.filetype ~= "NvimTree" then
+            if bufname and bufname ~= "" then
                 vim.cmd("mkview 1")
-                _G.previous_bufnr = current_buf
             end
+            _G.previous_bufnr = current_buf
             vim.cmd.Git()
             _G.fugitive_status_winid = vim.api.nvim_get_current_win()
         end
@@ -30,7 +30,7 @@ return {
             vim.cmd("q")
             if _G.previous_bufnr and vim.api.nvim_buf_is_valid(_G.previous_bufnr) then
                 local bufname = vim.api.nvim_buf_get_name(_G.previous_bufnr)
-                if bufname and bufname ~= "" and vim.bo.filetype ~= "NvimTree" then
+                if bufname and bufname ~= "" then
                     vim.cmd("buffer " .. _G.previous_bufnr)
                     vim.cmd("loadview 1")
                 else
