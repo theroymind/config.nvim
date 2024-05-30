@@ -1,7 +1,7 @@
 BREW := $(shell command -v brew 2> /dev/null)
 CONFIG_DIR := ~/.config/nvim
 
-all: check-brew install-neovim copy-config
+all: check-brew install-neovim install-ripgrep install-prettierd
 
 check-brew:
 ifndef BREW
@@ -13,15 +13,26 @@ endif
 
 install-neovim:
 ifdef BREW
-	@echo "Installing Neovim and ripgrep using Homebrew..."
-	brew install neovim ripgrep
+	@echo "Installing Neovim using Homebrew..."
+	brew install neovim
 else
-	@echo "Homebrew installation failed. Cannot proceed with Neovim and ripgrep installation."
+	@echo "Homebrew installation failed. Cannot proceed with Neovim installation."
 endif
 
-copy-config:
-	@echo "Copying configuration files to $(CONFIG_DIR)..."
-	mkdir -p $(CONFIG_DIR)
-	cp -r lazy-lock.json init.lua lua $(CONFIG_DIR)
+install-ripgrep:
+ifdef BREW
+	@echo "Installing ripgrep using Homebrew..."
+	brew install ripgrep
+else
+	@echo "Homebrew installation failed. Cannot proceed with ripgrep installation."
+endif
 
-.PHONY: all check-brew install-neovim copy-config
+install-prettierd:
+ifdef BREW
+	@echo "Installing prettierd using Homebrew..."
+	brew install fsouza/prettierd/prettierd
+else
+	@echo "Homebrew installation failed. Cannot proceed with prettierd installation."
+endif
+
+.PHONY: all check-brew install-neovim install-ripgrep install-prettierd
