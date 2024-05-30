@@ -17,40 +17,47 @@ return {
             _G.fugitive_status_winid = vim.api.nvim_get_current_win()
         end
 
-        -- Function to close the diff view and return to the Fugitive status window
-        function CloseDiffAndReturn()
-            vim.cmd("q")
-            if _G.fugitive_status_winid and vim.api.nvim_win_is_valid(_G.fugitive_status_winid) then
-                vim.api.nvim_set_current_win(_G.fugitive_status_winid)
-            end
+-- Function to close the diff view and return to the Fugitive status window
+function CloseDiffAndReturn()
+    if vim.bo.modified then
+        local bufname = vim.api.nvim_buf_get_name(0)
+        if bufname and bufname ~= "" then
+            vim.cmd("silent! write!")
+        else
+            vim.cmd("silent! edit!")
         end
+    end
+    vim.cmd("q!")
+    if _G.fugitive_status_winid and vim.api.nvim_win_is_valid(_G.fugitive_status_winid) then
+        vim.api.nvim_set_current_win(_G.fugitive_status_winid)
+    end
+end
 
-        -- Function to close Fugitive status window and return to the previous buffer with view restored
-        function CloseFugitiveAndReturn()
-            vim.cmd("q")
-            if _G.previous_bufnr and vim.api.nvim_buf_is_valid(_G.previous_bufnr) then
-                local bufname = vim.api.nvim_buf_get_name(_G.previous_bufnr)
-                if bufname and bufname ~= "" then
-                    vim.cmd("buffer " .. _G.previous_bufnr)
-                    vim.cmd("loadview 1")
-                else
-                    vim.cmd("buffer " .. _G.previous_bufnr)
-                end
-            end
+-- Function to close Fugitive status window and return to the previous buffer with view restored
+function CloseFugitiveAndReturn()
+    if vim.bo.modified then
+        local bufname = vim.api.nvim_buf_get_name(0)
+        if bufname and bufname ~= "" then
+            vim.cmd("silent! write!")
+        else
+            vim.cmd("silent! edit!")
         end
+    end
+    vim.cmd("q!")
+    if _G.previous_bufnr and vim.api.nvim_buf_is_valid(_G.previous_bufnr) then
+        local bufname = vim.api.nvim_buf_get_name(_G.previous_bufnr)
+        if bufname and bufname ~= "" then
+            vim.cmd("buffer " .. _G.previous_bufnr)
+            vim.cmd("loadview 1")
+        else
+            vim.cmd("buffer " .. _G.previous_bufnr)
+        end
+    end
+end
 
         -- Map '<leader>gs' to open Fugitive status window and track previous buffer
         vim.keymap.set("n", "<leader>gs", ":lua OpenFugitive()<CR>", { noremap = true, silent = true })
         vim.keymap.set("n", "<leader>gb", ":Git blame", { noremap = true, silent = true })
-        -- Map 'q' and 'Esc' to close the diff and return to the Fugitive status window if in diff view, else close Fugitive
-        vim.keymap.set("n", "q", function()
-            if vim.bo.ft == "fugitive" then
-                CloseFugitiveAndReturn()
-            else
-                CloseDiffAndReturn()
-            end
-        end, { noremap = true, silent = true })
-
         vim.keymap.set("n", "<Esc>", function()
             if vim.bo.ft == "fugitive" then
                 CloseFugitiveAndReturn()
