@@ -1,6 +1,8 @@
 # Installation
 Clone this repo into `./config/nvim` 
-ie: `git clone url ./config/nvim`
+
+Ex: `git clone url ./config/nvim`
+
 Run `make`, it install some dependencies through brew.
 
 ```
