@@ -41,7 +41,7 @@ return {
 
         -- Map '<leader>gs' to open Fugitive status window and track previous buffer
         vim.keymap.set("n", "<leader>gs", ":lua OpenFugitive()<CR>", { noremap = true, silent = true })
-
+        vim.keymap.set("n", "<leader>gb", ":Git blame", { noremap = true, silent = true })
         -- Map 'q' and 'Esc' to close the diff and return to the Fugitive status window if in diff view, else close Fugitive
         vim.keymap.set("n", "q", function()
             if vim.bo.ft == "fugitive" then

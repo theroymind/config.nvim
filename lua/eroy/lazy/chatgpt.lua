@@ -61,6 +61,7 @@ return {
 
         -- Normal mode mappings
         keymap('n', '<leader>cc', '<cmd>ChatGPT<CR>', opts)
+        --[[
         keymap('n', '<leader>ce', '<cmd>ChatGPTEditWithInstruction<CR>', opts)
         keymap('n', '<leader>cg', '<cmd>ChatGPTRun grammar_correction<CR>', opts)
         keymap('n', '<leader>ct', '<cmd>ChatGPTRun translate<CR>', opts)
@@ -87,5 +88,6 @@ return {
         keymap('v', '<leader>cx', '<cmd>ChatGPTRun explain_code<CR>', opts)
         keymap('v', '<leader>cr', '<cmd>ChatGPTRun roxygen_edit<CR>', opts)
         keymap('v', '<leader>cl', '<cmd>ChatGPTRun code_readability_analysis<CR>', opts)
+        ]]--
     end,
 }
