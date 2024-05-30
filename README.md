@@ -21,7 +21,7 @@ Vim configurations are done in the `lua/eroy/set.lua`
 General remaps are done in `lua/eroy/remap.lua` while plugin specific are typically done in their respective files. The only exception is the LSP keymaps are done in the `lua/eroy/init.lua`.
 
 ## Colors
-The default color scheme is Nord, you can see/add color schemes in
+The default color scheme is can be found in the ColorMyPencils function and you can see/add color schemes in
 
 `lua/eroy/lazy/colors.lua`
 
