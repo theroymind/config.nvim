@@ -1,5 +1,7 @@
 # Installation
-Checkout this repo and then running `make` will automatically install some dependencies through brew and then copy the nvim config into ~/.config/nvim.
+Clone this repo into `./config/nvim` 
+ie: `git clone url ./config/nvim`
+Run `make`, it install some dependencies through brew.
 
 ```
 make
