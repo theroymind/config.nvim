@@ -1,4 +1,3 @@
-
 return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -36,6 +35,9 @@ return {
             },
             autotag = {
                 enable = true
+            },
+            fold = {
+                enable = true
             }
         })
 
@@ -43,11 +45,23 @@ return {
         treesitter_parser_config.templ = {
             install_info = {
                 url = "https://github.com/vrischmann/tree-sitter-templ.git",
-                files = {"src/parser.c", "src/scanner.c"},
+                files = { "src/parser.c", "src/scanner.c" },
                 branch = "master",
             },
         }
-
+        -- Enable folding based on Treesitter
+        -- vim.opt.foldmethod = 'expr'
+        vim.opt.foldmethod = 'indent'
+        -- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+        vim.opt.foldlevelstart = 99 -- Start with all folds open
+        vim.opt.foldenable = false  -- Disable folding at startup
         vim.treesitter.language.register("templ", "templ")
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "vue",
+            callback = function()
+                vim.cmd('setlocal foldmethod=indent')
+                vim.cmd('setlocal foldexpr=')
+            end,
+        })
     end
 }
