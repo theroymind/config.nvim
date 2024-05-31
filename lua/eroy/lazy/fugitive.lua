@@ -3,7 +3,6 @@ return {
     config = function()
         -- Map '<leader>gs' to open Fugitive status window and track previous buffer
         vim.keymap.set("n", "<leader>gs", ":Git <CR>", { noremap = true, silent = true })
-        vim.keymap.set("n", "<leader>gb", ":Git blame <CR>", { noremap = true, silent = true })
 
         -- Create autocommand group for Fugitive
         local Eroy_Fugitive = vim.api.nvim_create_augroup("eroy_fugitive", {})
