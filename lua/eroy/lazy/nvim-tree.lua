@@ -54,6 +54,7 @@ return {
             local api = require("nvim-tree.api")
             local FloatPreview = require("float-preview")
             FloatPreview.attach_nvimtree(bufnr)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', '<CR>', ':lua require("nvim-tree.api").node.open.edit()<CR>', { noremap = true, silent = true })
         end
         nvimtree.setup {
             on_attach = on_attach,
