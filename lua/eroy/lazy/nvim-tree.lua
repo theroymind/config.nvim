@@ -1,10 +1,62 @@
 return {
-    'kyazdani42/nvim-tree.lua',
+    'nvim-tree/nvim-tree.lua',
+    dependencies = {
+        {
+            "JMarkin/nvim-tree.lua-float-preview",
+            lazy = true,
+            -- default
+            opts = {
+                -- Whether the float preview is enabled by default. When set to false, it has to be "toggled" on.
+                toggled_on = false,
+                -- wrap nvimtree commands
+                wrap_nvimtree_commands = true,
+                -- lines for scroll
+                scroll_lines = 20,
+                -- window config
+                window = {
+                    style = "minimal",
+                    relative = "win",
+                    border = "rounded",
+                    wrap = false,
+                },
+                mapping = {
+                    -- scroll down float buffer
+                    down = { "<C-d>" },
+                    -- scroll up float buffer
+                    up = { "<C-e>", "<C-u>" },
+                    -- enable/disable float windows
+                    toggle = { "<Tab>" },
+                },
+                -- hooks if return false preview doesn't shown
+                hooks = {
+                    pre_open = function(path)
+                        -- if file > 5 MB or not text -> not preview
+                        local size = require("float-preview.utils").get_size(path)
+                        if type(size) ~= "number" then
+                            return false
+                        end
+                        local is_text = require("float-preview.utils").is_text(path)
+                        return size < 5 and is_text
+                    end,
+                    post_open = function(bufnr)
+                        return true
+                    end,
+                },
+            },
+        },
+    },
     config = function()
         vim.g.loaded_netrw = 1
         vim.g.loaded_netrwPlugin = 1
         vim.opt.termguicolors = true
-        require('nvim-tree').setup {
+        local nvimtree = require('nvim-tree')
+        local function on_attach(bufnr)
+            local api = require("nvim-tree.api")
+            local FloatPreview = require("float-preview")
+            FloatPreview.attach_nvimtree(bufnr)
+        end
+        nvimtree.setup {
+            on_attach = on_attach,
             auto_reload_on_write = true,
             disable_netrw = true,
             hijack_netrw = true,
@@ -14,10 +66,6 @@ return {
             diagnostics = {
                 enable = true,
             },
-            view = {
-                width = 30,
-                side = 'left',
-            },
             renderer = {
                 highlight_opened_files = "all",
             },
@@ -25,7 +73,6 @@ return {
                 enable = true
             }
         }
-
         vim.api.nvim_set_keymap('n', '<leader>pv', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
     end
 }
