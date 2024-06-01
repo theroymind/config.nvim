@@ -9,7 +9,7 @@ return {
                 -- Whether the float preview is enabled by default. When set to false, it has to be "toggled" on.
                 toggled_on = false,
                 -- wrap nvimtree commands
-                wrap_nvimtree_commands = true,
+                wrap_nvimtree_commands = false,
                 -- lines for scroll
                 scroll_lines = 20,
                 -- window config
@@ -52,9 +52,12 @@ return {
         local nvimtree = require('nvim-tree')
         local function on_attach(bufnr)
             local api = require("nvim-tree.api")
+            api.config.mappings.default_on_attach(bufnr)
             local FloatPreview = require("float-preview")
             FloatPreview.attach_nvimtree(bufnr)
-            vim.api.nvim_buf_set_keymap(bufnr, 'n', '<CR>', ':lua require("nvim-tree.api").node.open.edit()<CR>', { noremap = true, silent = true })
+            -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<CR>', ':lua require("nvim-tree.api").node.open.edit()<CR>',
+            --     { noremap = true, silent = true })
+            -- vim.keymap.set('n', 'g?', api.tree.toggle_help, { noremap = true })
         end
         nvimtree.setup {
             on_attach = on_attach,
