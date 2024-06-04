@@ -46,9 +46,21 @@ return {
             local word = vim.fn.expand("<cWORD>")
             builtin.grep_string({ search = word })
         end)
+        local function input_with_cancel(prompt)
+            local input = vim.fn.input(prompt)
+            if input == "" then
+                return nil
+            end
+            return input
+        end
+
+        -- Custom grep_string function with cancel support
         vim.keymap.set('n', '<leader>ps', function()
-            builtin.grep_string({ search = vim.fn.input("Grep > ") })
-        end)
+            local search_term = input_with_cancel("grep ➤ ")
+            if search_term then
+                require('telescope.builtin').grep_string({ search = search_term })
+            end
+        end, { noremap = true, silent = true })
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
         vim.keymap.set('n', '<leader>qo', function()
             if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
@@ -109,10 +121,10 @@ return {
 
         -- Autocommand to map 'dd' in the quickfix window
         vim.cmd([[
-    augroup QuickfixMappings
-        autocmd!
-        autocmd FileType qf nnoremap <buffer> dd :lua Delete_current_quickfix_entry()<CR>
-    augroup END
-]])
+            augroup QuickfixMappings
+                autocmd!
+                autocmd FileType qf nnoremap <buffer> dd :lua Delete_current_quickfix_entry()<CR>
+            augroup END
+        ]])
     end
 }
