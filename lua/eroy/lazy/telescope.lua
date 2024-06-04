@@ -6,6 +6,7 @@ return {
     },
     name = "telescope",
     config = function()
+        local actions = require('telescope.actions')
         require('telescope').setup({ defaults = {
           layout_config = {
             vertical = {
@@ -18,6 +19,18 @@ return {
           path_display = {
             "filename_first"
           },
+            mappings = {
+                    i = {
+                        ["<Tab>"] = actions.toggle_selection + actions.move_selection_next,
+                        ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_previous,
+                        ["<leader>qf"] = actions.send_selected_to_qflist + actions.open_qflist,
+                    },
+                    n = {
+                        ["<Tab>"] = actions.toggle_selection + actions.move_selection_next,
+                        ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_previous,
+                        ["<leader>qf"] = actions.send_selected_to_qflist + actions.open_qflist,
+                    },
+                },
         }})
 
         local builtin = require('telescope.builtin')
@@ -35,6 +48,13 @@ return {
             builtin.grep_string({ search = vim.fn.input("Grep > ") })
         end)
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
+        vim.keymap.set('n', '<leader>qo', function()
+            if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
+                vim.cmd('cclose')
+            else
+                vim.cmd('copen')
+            end
+        end, { noremap = true, silent = true })
     end
 }
 
