@@ -30,7 +30,7 @@ return {
                 "rust_analyzer",
                 "tsserver",
                 "vuels",
-                "phpactor"
+                --"phpactor"
             },
             handlers = {
                 function(server_name) -- default handler (optional)
