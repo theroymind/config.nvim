@@ -30,7 +30,7 @@ return {
                 "rust_analyzer",
                 "tsserver",
                 "vuels",
-                "intelephense"
+                "phpactor"
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -63,10 +63,10 @@ return {
                         },
                     }
                 end,
-                ["intelephense"] = function()
+                ["phpactor"] = function()
                     local lspconfig = require("lspconfig")
-                    lspconfig.intelephense.setup {
-                        -- Config if required
+                    lspconfig.phpactor.setup {
+                        filetypes = { "php", "blade" }
                     }
                 end,
                 ["lua_ls"] = function()

@@ -38,7 +38,6 @@ return {
                     vim.cmd.Git({ 'pull', '--rebase' })
                 end, opts)
 
-                vim.keymap.set("n", "<leader>t", ":Git push -u origin ", opts)
                 vim.keymap.set("n", "<leader>gU", ":Git checkout %<CR>",
                     { noremap = true, silent = true, buffer = bufnr })
                 vim.keymap.set("n", "<leader>gu", ":Git checkout -p<CR>",

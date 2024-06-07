@@ -9,7 +9,7 @@ return {
             -- A list of parser names, or "all"
             ensure_installed = {
                 "vimdoc", "javascript", "typescript", "c", "lua", "rust",
-                "jsdoc", "bash",
+                "jsdoc", "bash", "php", "html", "php_only", "bash", "blade"
             },
 
             -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -49,6 +49,26 @@ return {
                 branch = "master",
             },
         }
+        treesitter_parser_config.blade = {
+            install_info = {
+                url = "https://github.com/EmranMR/tree-sitter-blade",
+                files = { "src/parser.c" },
+                branch = "main",
+            },
+            filetype = "blade",
+        }
+        vim.filetype.add({
+            pattern = {
+                [".*%.blade%.php"] = "blade",
+            },
+        })
+
+        vim.cmd [[
+            augroup BladeFiletypeRelated
+            autocmd!
+            autocmd BufNewFile,BufRead *.blade.php set ft=blade
+            augroup END
+            ]]
         -- Enable folding based on Treesitter
         -- vim.opt.foldmethod = 'expr'
         vim.opt.foldmethod = 'indent'
