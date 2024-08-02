@@ -29,7 +29,8 @@ return {
                 "lua_ls",
                 "rust_analyzer",
                 "tsserver",
-                "vuels",
+                "volar",
+                "tailwindcss",
                 --"phpactor"
             },
             handlers = {
@@ -42,26 +43,45 @@ return {
                         }
                     }
                 end,
-                ["vuels"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.vuels.setup {
-                        cmd = { "vls" },
-                        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-                        settings = {
-                            vetur = {
-                                useWorkspaceDependencies = false,
-                                validation = {
-                                    template = true,
-                                    style = true,
-                                    script = true,
-                                },
-
-                                experimental = {
-                                    templateInterpolationService = true,
+                -- ["vuels"] = function()
+                --     local lspconfig = require("lspconfig")
+                --     lspconfig.vuels.setup {
+                --         cmd = { "vls" },
+                --         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+                --         settings = {
+                --             vetur = {
+                --                 useWorkspaceDependencies = false,
+                --                 validation = {
+                --                     template = true,
+                --                     style = true,
+                --                     script = true,
+                --                 },
+                --
+                --                 experimental = {
+                --                     templateInterpolationService = true,
+                --                 },
+                --             },
+                --         },
+                --     }
+                -- end,
+                ["tsserver"] = function()
+                    local vue_language_server_path = require('mason-registry').get_package('vue-language-server')
+                        :get_install_path() .. '/node_modules/@vue/language-server'
+                    require("lspconfig").tsserver.setup {
+                        init_options = {
+                            plugins = {
+                                {
+                                    name = '@vue/typescript-plugin',
+                                    location = vue_language_server_path,
+                                    languages = { 'vue' },
                                 },
                             },
                         },
+                        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
                     }
+                end,
+                ["volar"] = function()
+                    require("lspconfig").volar.setup {}
                 end,
                 ["phpactor"] = function()
                     local lspconfig = require("lspconfig")

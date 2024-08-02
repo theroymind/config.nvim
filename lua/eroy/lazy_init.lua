@@ -15,3 +15,4 @@ require("lazy").setup({
     spec = "eroy.lazy",
     change_detection = { notify = false }
 })
+
