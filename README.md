@@ -1,7 +1,7 @@
 # Installation
-Clone this repo into `./config/nvim` 
+Clone this repo into `~/.config/nvim` 
 
-Ex: `git clone url ./config/nvim`
+`git clone git@github.com:theroymind/config.nvim.git ~/.config/nvim`
 
 Run `make`, it will install the dependencies (including nvim) through brew.
 
