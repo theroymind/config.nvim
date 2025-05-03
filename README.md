@@ -1,7 +1,8 @@
 # Installation
 Clone this repo into `~/.config/nvim` 
-
-`git clone git@github.com:theroymind/config.nvim.git ~/.config/nvim`
+```
+git clone git@github.com:theroymind/config.nvim.git ~/.config/nvim
+```
 
 Run `make`, and select dependencies to install.
 
