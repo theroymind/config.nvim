@@ -2,13 +2,29 @@ return {
     "nvim-telescope/telescope.nvim",
 
     dependencies = {
-        "nvim-lua/plenary.nvim"
+        "nvim-lua/plenary.nvim",
+        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     name = "telescope",
     config = function()
         local actions = require('telescope.actions')
         require('telescope').setup({
+            extensions = {
+                fzf = {
+                    fuzzy = true,
+                    override_generic_sorter = true,
+                    override_file_sorter = true,
+                },
+            },
             defaults = {
+                file_ignore_patterns = {
+                    "node_modules/",
+                    "%.git/",
+                    "vendor/",
+                    "tmp/",
+                    "log/",
+                    "%.min%.js",
+                },
                 layout_config = {
                     vertical = {
                         width = 0.95
@@ -35,33 +51,11 @@ return {
             }
         })
 
-        local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
-        vim.keymap.set('n', '<C-p>', builtin.git_files, {})
-        vim.keymap.set('n', '<leader>pws', function()
-            local word = vim.fn.expand("<cword>")
-            builtin.grep_string({ search = word })
-        end)
-        vim.keymap.set('n', '<leader>pWs', function()
-            local word = vim.fn.expand("<cWORD>")
-            builtin.grep_string({ search = word })
-        end)
-        local function input_with_cancel(prompt)
-            local input = vim.fn.input(prompt)
-            if input == "" then
-                return nil
-            end
-            return input
-        end
+        require('telescope').load_extension('fzf')
 
-        -- Custom grep_string function with cancel support
-        vim.keymap.set('n', '<leader>ps', function()
-            local search_term = input_with_cancel("grep ➤ ")
-            if search_term then
-                require('telescope.builtin').grep_string({ search = search_term })
-            end
-        end, { noremap = true, silent = true })
-        vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
+        -- File finding and grep keybindings are in fzf.lua (fzf-lua)
+
+        local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>qo', function()
             if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
                 vim.cmd('cclose')
